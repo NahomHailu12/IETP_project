@@ -1,19 +1,32 @@
+"use client";
 import ContactCard from "@/components/common/ContactCard";
 import ButtonWidget from "@/components/UI/Home UI/Button";
 import ImageCard from "@/components/UI/Home UI/ImageCard";
 import HomeProduct from "@/components/UI/Home UI/product";
 import Testimony from "@/components/UI/Home UI/testimony";
 import Link from "next/link";
-export default function Home() {
+import { motion } from "framer-motion";
+export default function Page() {
+  const fadeUp = {
+    initial: { opacity: 0, y: 40 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 1 },
+  };
+
   return (
     <div className="flex min-h-screen flex-col gap-0 items-center justify-center bg-zinc-50">
       <ImageCard />
+
       <div className="w-full">
-        <p className="p-4 lg:mx-20 text-5xl font-bold text-black text-center mb-16 leading-[5.8rem]">
+        <motion.p
+          {...fadeUp}
+          className="p-4 lg:mx-20 text-5xl font-bold text-black text-center mb-16 leading-[5.8rem]"
+        >
           Our Machinery and Services
-        </p>
-        <br />
-        <div className="overflow-hidden whitespace-nowrap">
+        </motion.p>
+
+        <motion.div {...fadeUp} className="overflow-hidden whitespace-nowrap">
           <div className="inline-block animate-marquee">
             {[
               "Flexible",
@@ -23,13 +36,16 @@ export default function Home() {
               "Durable",
               "Efficient",
               "Powerful",
-            ].map((item, i) => {
-              return <ButtonWidget key={i} child={item} />;
-            })}
+            ].map((item, i) => (
+              <ButtonWidget key={i} child={item} />
+            ))}
           </div>
-        </div>
+        </motion.div>
 
-        <div className="grid px-8 mx-8 grid-cols-1 gap-6 md:grid-cols-3">
+        <motion.div
+          {...fadeUp}
+          className="grid px-8 mx-8 grid-cols-1 gap-6 md:grid-cols-3"
+        >
           <HomeProduct
             imageUrl="url('/product1.jpg')"
             title="Excavator ZX350LC-6"
@@ -48,16 +64,25 @@ export default function Home() {
             power="1200 HP"
             price="$670,000"
           />
-        </div>
-        <p className="p-4 lg:mx-20 text-amber-500 text-5xl font-bold text-center mb-16 leading-[5.8rem]">
+        </motion.div>
+
+        <motion.p
+          {...fadeUp}
+          className="p-4 lg:mx-20 text-amber-500 text-5xl font-bold text-center mb-16 leading-[5.8rem]"
+        >
           What Our Clients Say
-        </p>
-        <div className="flex justify-center mb-12">
+        </motion.p>
+
+        <motion.div {...fadeUp} className="flex justify-center mb-12">
           <button className="bg-white text-amber-500 text-2xl rounded-full font-bold px-6 py-3 hover:bg-amber-500 hover:text-white transition">
             <Link href="/Contact">Contact Us</Link>
           </button>
-        </div>
-        <div className="grid px-20 grid-cols-1 gap-12 md:grid-cols-3 mb-20 text-amber-300">
+        </motion.div>
+
+        <motion.div
+          {...fadeUp}
+          className="grid px-20 grid-cols-1 gap-12 md:grid-cols-3 mb-20 text-amber-300"
+        >
           <Testimony
             imageUrl="/user1.jpg"
             username="John Doe"
@@ -100,10 +125,11 @@ export default function Home() {
             userrole="Field Technician"
             testimony="Their modern and multi-purpose equipment has made our tasks much easier. The team is always ready to assist us whenever needed."
           />
-        </div>
-        <div className="w-1/ mx-auto my-20">
+        </motion.div>
+
+        <motion.div {...fadeUp} className="w-1/ mx-auto my-20">
           <ContactCard />
-        </div>
+        </motion.div>
       </div>
     </div>
   );
