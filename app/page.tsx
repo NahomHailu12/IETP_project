@@ -1,65 +1,136 @@
-import Image from "next/image";
+"use client";
+import ContactCard from "@/components/common/ContactCard";
+import ButtonWidget from "@/components/UI/Home UI/Button";
+import ImageCard from "@/components/UI/Home UI/ImageCard";
+import HomeProduct from "@/components/UI/Home UI/product";
+import Testimony from "@/components/UI/Home UI/testimony";
+import Link from "next/link";
+import { motion } from "framer-motion";
+export default function Page() {
+  const fadeUp = {
+    initial: { opacity: 0, y: 40 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 1 },
+  };
 
-export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className="flex min-h-screen flex-col gap-0 items-center justify-center bg-zinc-50">
+      <ImageCard />
+
+      <div className="w-full">
+        <motion.p
+          {...fadeUp}
+          className="p-4 lg:mx-20 text-5xl font-bold text-black text-center mb-16 leading-[5.8rem]"
+        >
+          Our Machinery and Services
+        </motion.p>
+
+        <motion.div {...fadeUp} className="overflow-hidden whitespace-nowrap">
+          <div className="inline-block animate-marquee">
+            {[
+              "Flexible",
+              "Modern",
+              "Reliable",
+              "Multi-purpose",
+              "Durable",
+              "Efficient",
+              "Powerful",
+            ].map((item, i) => (
+              <ButtonWidget key={i} child={item} />
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div
+          {...fadeUp}
+          className="grid px-8 mx-8 grid-cols-1 gap-6 md:grid-cols-3"
+        >
+          <HomeProduct
+            imageUrl="url('/product1.jpg')"
+            title="Excavator ZX350LC-6"
+            power="257 HP"
+            price="$120,000"
+          />
+          <HomeProduct
+            imageUrl="url('/product1.jpg')"
+            title="Tractor ZX350LC-6"
+            power="679 HP"
+            price="$500,000"
+          />
+          <HomeProduct
+            imageUrl="url('/product1.jpg')"
+            title="EXcavator ZX350LC-6"
+            power="1200 HP"
+            price="$670,000"
+          />
+        </motion.div>
+
+        <motion.p
+          {...fadeUp}
+          className="p-4 lg:mx-20 text-amber-500 text-5xl font-bold text-center mb-16 leading-[5.8rem]"
+        >
+          What Our Clients Say
+        </motion.p>
+
+        <motion.div {...fadeUp} className="flex justify-center mb-12">
+          <button className="bg-white text-amber-500 text-2xl rounded-full font-bold px-6 py-3 hover:bg-amber-500 hover:text-white transition">
+            <Link href="/Contact">Contact Us</Link>
+          </button>
+        </motion.div>
+
+        <motion.div
+          {...fadeUp}
+          className="grid px-20 grid-cols-1 gap-12 md:grid-cols-3 mb-20 text-amber-300"
+        >
+          <Testimony
+            imageUrl="/user1.jpg"
+            username="John Doe"
+            userrole="Construction Manager"
+            stars={5}
+            testimony="The machinery provided by this company has significantly improved our project efficiency. Highly recommended!"
+          />
+          <Testimony
+            imageUrl="/user2.jpg"
+            stars={5}
+            username="Jane Smith"
+            userrole="Site Supervisor"
+            testimony=" Excellent customer service and reliable equipment. Our team is very satisfied with the performance."
+          />
+          <Testimony
+            imageUrl="/user3.jpg"
+            stars={3}
+            username="Mike Johnson"
+            userrole="Project Engineer"
+            testimony="The durability and power of their machinery have exceeded our expectations. A great investment for our projects."
+          />
+          <Testimony
+            imageUrl="/user4.jpg"
+            stars={4}
+            username="Emily Davis"
+            userrole="Operations Director"
+            testimony="Working with this company has been a game-changer for our operations. Their equipment is top-notch and their support is outstanding."
+          />
+          <Testimony
+            imageUrl="/user5.jpg"
+            stars={5}
+            username="David Wilson"
+            userrole="Logistics Coordinator"
+            testimony="The efficiency and reliability of their machinery have streamlined our workflow. We couldn't be happier with our choice."
+          />
+          <Testimony
+            imageUrl="/user6.jpg"
+            username="Sarah Brown"
+            stars={5}
+            userrole="Field Technician"
+            testimony="Their modern and multi-purpose equipment has made our tasks much easier. The team is always ready to assist us whenever needed."
+          />
+        </motion.div>
+
+        <motion.div {...fadeUp} className="w-1/ mx-auto my-20">
+          <ContactCard />
+        </motion.div>
+      </div>
     </div>
   );
 }
