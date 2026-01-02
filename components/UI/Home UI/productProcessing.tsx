@@ -28,6 +28,8 @@ const OrderProcess: React.FC<OrderProcessProp> = ({ setType }) => {
     // implentation for handling contact form submission
     setIsloading(true);
     reset();
+
+    
     setType("0");
     setIsloading(false);
   };
@@ -59,6 +61,7 @@ const OrderProcess: React.FC<OrderProcessProp> = ({ setType }) => {
               Full name is required
             </p>
           )}
+          
         </div>
         <div className="">
           <label className="text-xl font-bold mb-2 text-left text-amber-500">
