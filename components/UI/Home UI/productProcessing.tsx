@@ -13,8 +13,12 @@ interface OrderProcessProp {
   type: "0" | "1" | "2" | "3";
   setType: React.Dispatch<React.SetStateAction<"0" | "1" | "2" | "3">>;
 }
-
-const OrderProcess: React.FC<OrderProcessProp> = ({ setType }) => {
+const prices: Record<string, number> = {
+  "1": 120000,
+  "2": 500000,
+  "3": 670000,
+};
+const OrderProcess: React.FC<OrderProcessProp> = ({ type, setType }) => {
   const {
     register,
     handleSubmit,
@@ -28,8 +32,26 @@ const OrderProcess: React.FC<OrderProcessProp> = ({ setType }) => {
     // implentation for handling contact form submission
     setIsloading(true);
     reset();
+    try {
+      const response = await fetch("/api/Order/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...data,
+          amount: Number(data.amount),
+          price: prices[type] * Number(data.amount),
+        }),
+      });
+      if (response.ok) {
+        alert("Order placed successfully!");
+      }
+    } catch (err) {
+      console.error("Error submitting order:", err);
+      alert("we can't process your request try again later");
+    }
 
-    
     setType("0");
     setIsloading(false);
   };
@@ -61,7 +83,6 @@ const OrderProcess: React.FC<OrderProcessProp> = ({ setType }) => {
               Full name is required
             </p>
           )}
-          
         </div>
         <div className="">
           <label className="text-xl font-bold mb-2 text-left text-amber-500">

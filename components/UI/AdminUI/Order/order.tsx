@@ -1,43 +1,51 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import OrderItem, {
   OrderItemProps,
 } from "@/components/UI/AdminUI/Order/OrderItem";
-const orderitems: OrderItemProps[] = [
-  {
-    id: "001",
-    name: "John Doe",
-    status: "pending",
-    date: "2023-10-01",
-    price: 150.0,
-  },
-  {
-    id: "002",
-    name: "Jane Smith",
-    status: "Completed",
-    date: "2023-09-15",
-    price: 250.0,
-  },
-  {
-    id: "003",
-    name: "Bob Johnson",
-    status: "Cancelled",
-    date: "2023-08-20",
-    price: 100.0,
-  },
-  {
-    id: "004",
-    name: "Alice Williams",
-    status: "pending",
-    date: "2023-10-05",
-    price: 300.0,
-  },
-];
+import { OrderMaxAggregateOutputType } from "@/prisma/generated/prisma/models";
+
 
 const Orders = () => {
   const [status, setStatus] = useState<
     "All" | "pending" | "Completed" | "Cancelled"
   >("All");
+  const [items, setItems] = useState<OrderItemProps[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        setIsLoading(true);
+        const res = await fetch("/api/Order");
+
+        if (!res.ok) throw new Error("Failed to fetch products");
+
+        const data = await res.json();
+        setItems(
+          data.map((item: OrderMaxAggregateOutputType) => ({
+            id: item.id?.substring(0, 8),
+            name: item.name,
+            status: item.status,
+            date: item.date?.toString()?.substring(0, 11) || "",
+            price: item.price,
+          }))
+        );
+      } catch (error) {
+          setError(error instanceof Error ? error.message : "An unexpected error occurred");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    getProducts();
+  }, []);
+
+  // 3. Conditional Rendering
+  if (isLoading)
+    return <div className="p-10 text-center">Loading products...</div>;
+  if (error) return <div className="text-red-500">Error: {error}</div>;
   return (
     <div className="mx-24 min-h-screen mb-10 p-6 rounded-2xl border border-gray-100 shadow-lg">
       <h1 className="my-4 text-3xl  text-gray-500 pl-6 font-bold mb-16">
@@ -95,7 +103,7 @@ const Orders = () => {
         <p className="item-center">Price</p>
         <p className="item-center">Date</p>
       </div>
-      {orderitems
+      {items
         .filter((item) => (status === "All" ? true : item.status === status))
         .map((order: OrderItemProps, item: number) => (
           <div key={item}>

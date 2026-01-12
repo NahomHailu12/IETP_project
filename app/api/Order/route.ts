@@ -36,10 +36,9 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const orders = await prisma.order.findMany();
-    console.log(orders);
     return new Response(JSON.stringify(orders), { status: 200 });
   } catch (error) {
     return new Response(

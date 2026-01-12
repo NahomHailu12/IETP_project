@@ -1,4 +1,5 @@
 import { Empolyee } from "@/components/UI/AdminUI/ManageAdmin/employeeCard";
+import { OrderItemProps } from "@/components/UI/AdminUI/Order/OrderItem";
 
 export const users: Empolyee[] = [
   {
@@ -105,5 +106,35 @@ export const users: Empolyee[] = [
     phone: "+251925678901",
     role: "super-admin",
     dateJoined: "2021-10-11",
+  },
+];
+export const orderitems: OrderItemProps[] = [
+  {
+    id: "001",
+    name: "John Doe",
+    status: "pending",
+    date: "2023-10-01",
+    price: 150.0,
+  },
+  {
+    id: "002",
+    name: "Jane Smith",
+    status: "Completed",
+    date: "2023-09-15",
+    price: 250.0,
+  },
+  {
+    id: "003",
+    name: "Bob Johnson",
+    status: "Cancelled",
+    date: "2023-08-20",
+    price: 100.0,
+  },
+  {
+    id: "004",
+    name: "Alice Williams",
+    status: "pending",
+    date: "2023-10-05",
+    price: 300.0,
   },
 ];

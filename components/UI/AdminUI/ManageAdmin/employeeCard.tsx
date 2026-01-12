@@ -30,11 +30,11 @@ const EmployeeCard: React.FC<Empolyee> = ({
       <div className="flex flex-col item-left bg-white p-4">
         <div className="flex flex-col p-4">
           <div className="text-left text-xl">
-            <p className="text-gray-300">
+            <div className="text-gray-300">
               <UserCheck className="inline mb-1 mr-2 mx-3" size={20} />
               ROLE
               <p className="text-gray-800 ml-20 mb-6">{role}</p>
-            </p>
+            </div>
           </div>
           <div className="text-left text-xl">
             <p className="text-gray-300">
