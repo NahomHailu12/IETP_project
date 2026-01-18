@@ -2,6 +2,7 @@
 import { Contact, Mail, MessageCircle, PhoneCall, User } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 interface ContactFormData {
   fullname: string;
   email: string;
@@ -40,11 +41,11 @@ const ContactForm = () => {
         err instanceof Error
           ? err.message
           : "Unable to send your message. Please try again later.";
-      alert(message);
+      toast.error(message);
       setIsloading(false);
       return;
     }
-    alert("submitted successfully");
+    toast.success("submitted successfully");
     setIsloading(false);
     reset();
   };

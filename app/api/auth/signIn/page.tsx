@@ -1,8 +1,11 @@
 "use client";
+import { signIn } from "next-auth/react";
 import { Contact, LockIcon, Mail, User } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
-interface User {
+import { toast } from "sonner";
+export interface User {
   email: string;
   password: string;
 }
@@ -25,30 +28,43 @@ const SignInCard = () => {
     mode: "onBlur",
   });
   const [isloading, setIsloading] = useState(false);
+  const searchParams = useSearchParams();
+  const [targetUrl, setTargetUrl] = useState("");
+  const [shouldRedirect, setShouldRedirect] = useState(false);
   const handleContact = async (data: User) => {
     // implentation for sign in
-    const formData = new FormData();
+    const callbackUrl = searchParams.get("callbackUrl") || "/Admin";
     setIsloading(true);
-    const url = "";
     try {
-      await fetch(url, {
-        method: "POST",
-        body: formData,
-        mode: "no-cors",
+      const res = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+        callbackUrl: callbackUrl,
       });
-    } catch (err: unknown) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : "Unable to send your message. Please try again later.";
-      alert(message);
+      if (res?.error) {
+        toast.error("Wrong email or password");
+        setIsloading(false);
+        reset();
+        return;
+      }
+      toast.success("Wellcome back!");
+      setIsloading(false);
+      setTargetUrl(res?.url && res.url !== "null" ? res.url : "/Admin")
+      setShouldRedirect(true)
+      reset();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Something went wrong");
       setIsloading(false);
       return;
     }
-    alert("submitted successfully");
-    setIsloading(false);
-    reset();
   };
+  useEffect(()=>{
+    if(shouldRedirect && targetUrl){
+      console.log(window.location.href);
+      window.location.href = targetUrl;
+    }
+  },[shouldRedirect, targetUrl])
   return (
     <div className="w-fit  md:mx-8 my-16 h-min-30rem border border-gray-100 p-6 bg-gray-50 rounded-lg text-black shadow-sm">
       <h1 className="block font-bold text-3xl text-amber-300 text-center my-6">
@@ -98,7 +114,7 @@ const SignInCard = () => {
               },
             })}
             className="text-amber-500 text-semibold mx-8 p-2 border border-gray-200 rounded-2xl w-5/6 block focus:border-amber-400 focus:outline-none  md:h-16 my-4"
-            name="phone"
+            name="password"
             placeholder="password"
             required
           />

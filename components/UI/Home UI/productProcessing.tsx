@@ -2,6 +2,7 @@
 import { Contact, Mail, MessageCircle, PhoneCall, User } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 interface ContactFormData {
   fullname: string;
   email: string;
@@ -45,11 +46,11 @@ const OrderProcess: React.FC<OrderProcessProp> = ({ type, setType }) => {
         }),
       });
       if (response.ok) {
-        alert("Order placed successfully!");
+        toast.success("Order placed successfully!");
       }
     } catch (err) {
       console.error("Error submitting order:", err);
-      alert("we can't process your request try again later");
+      toast.error("we can't process your request try again later");
     }
 
     setType("0");

@@ -1,5 +1,8 @@
-import { NextAuthOptions, User } from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { User } from "./app/api/auth/signIn/page";
+import { verifyPassword } from "./utils/dummy/bcrypt";
+import prisma from "@/libs/prisma";
 
 interface CustomUser extends User {
   id: string;
@@ -26,28 +29,39 @@ export const authOptions: NextAuthOptions = {
       name: "Credentials",
       credentials: {},
       async authorize(credentials) {
-        const cred = credentials as Record<"email" | "password", string> | undefined;
+        const cred = credentials as User | undefined;
         try {
-          const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/authorize`, {
-            method: "POST",
-            body: JSON.stringify({
-              email: cred?.email,
-              password: cred?.password
-            }),
-            headers: { "Content-Type": "application/json" }
-          });
-          
-          const data = await res.json();
-          if (res.ok && data) {
-            return data;
+          console.log(cred)
+          if (cred) {
+            if (
+              cred.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) &&
+              cred.password.length >= 6
+            ) {
+              const users = await prisma.user.findFirst({
+                where: {
+                  email: cred.email,
+                },
+              });
+                console.log(users)
+              if (
+                users &&
+                (await verifyPassword(cred.password, users.password))
+              ) {
+                return users as CustomUser;
+              }
+            }
           }
         } catch (error) {
-          console.error("Error authorizing user:", error);
+          console.error("Error authorizing user", error);
         }
         return null;
-      }
-    })
+      },
+    }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt",
+  },
   callbacks: {
     async jwt({ user, token }) {
       if (user) {
@@ -63,7 +77,7 @@ export const authOptions: NextAuthOptions = {
     },
   },
   pages: {
-    signIn: "/auth/signin",
+    signIn: "/api/auth/signIn",
   },
 };
 
