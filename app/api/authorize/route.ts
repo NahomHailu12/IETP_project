@@ -1,6 +1,7 @@
 import prisma from "@/libs/prisma";
 import { verifyPassword } from "@/utils/dummy/bcrypt";
 
+export const runtime = "nodejs";
 export async function POST(req: Request) {
   if (req.method === "POST") {
     try {
@@ -22,7 +23,7 @@ export async function POST(req: Request) {
               {
                 status: 200,
                 headers: { "Content-Type": "application/json" },
-              }
+              },
             );
           }
         }
@@ -31,7 +32,7 @@ export async function POST(req: Request) {
           { error: "Invalid Crendential" },
           {
             status: 403,
-          }
+          },
         );
       }
     } catch (error) {

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Prisma } from "@/prisma/generated/prisma/client"; // Import Prisma namespace for types
 import { prisma } from "@/libs/prisma";
 
+export const runtime = "nodejs";
 // 1. Define an interface for your expected SQL result
 interface DbResult {
   time: Date;
