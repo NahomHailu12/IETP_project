@@ -5,7 +5,6 @@ import OrderItem, {
 } from "@/components/UI/AdminUI/Order/OrderItem";
 import { OrderMaxAggregateOutputType } from "@/prisma/generated/prisma/models";
 
-
 const Orders = () => {
   const [status, setStatus] = useState<
     "All" | "pending" | "Completed" | "Cancelled"
@@ -18,7 +17,7 @@ const Orders = () => {
     const getProducts = async () => {
       try {
         setIsLoading(true);
-        const res = await fetch("/api/Order");
+        const res = await fetch("/api/order");
 
         if (!res.ok) throw new Error("Failed to fetch products");
 
@@ -30,10 +29,14 @@ const Orders = () => {
             status: item.status,
             date: item.date?.toString()?.substring(0, 11) || "",
             price: item.price,
-          }))
+          })),
         );
       } catch (error) {
-          setError(error instanceof Error ? error.message : "An unexpected error occurred");
+        setError(
+          error instanceof Error
+            ? error.message
+            : "An unexpected error occurred",
+        );
       } finally {
         setIsLoading(false);
       }
