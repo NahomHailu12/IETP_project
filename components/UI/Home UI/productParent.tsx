@@ -10,32 +10,36 @@ const ProductParent = () => {
       {type == "0" && (
         <>
           <HomeProduct
-            imageUrl="url('/product1.jpg')"
+            imageUrl="url('/pp1.jpg')"
             title="Excavator ZX350LC-6"
             power="257 HP"
-            price="$120,000"
+            price="12,000Br"
             item="1"
-            setType = {setType}
+            setType={setType}
           />
           <HomeProduct
-            imageUrl="url('/product1.jpg')"
+            imageUrl="url('/pp1.jpg')"
             title="Tractor ZX350LC-6"
             power="679 HP"
-            price="$500,000"
+            price="50,000Br"
             item="2"
-            setType = {setType}
+            setType={setType}
           />
           <HomeProduct
-            imageUrl="url('/product1.jpg')"
+            imageUrl="url('/pp1.jpg')"
             title="EXcavator ZX350LC-6"
             power="1200 HP"
-            price="$670,000"
+            price="67,000Br"
             item="3"
-            setType = {setType}
+            setType={setType}
           />
         </>
       )}
-      {type != "0" && (<div className="col-span-3"><OrderProcess type={type} setType={setType}/></div>)}
+      {type != "0" && (
+        <div className="col-span-3">
+          <OrderProcess type={type} setType={setType} />
+        </div>
+      )}
     </div>
   );
 };
