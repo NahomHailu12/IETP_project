@@ -34,7 +34,7 @@ const OrderProcess: React.FC<OrderProcessProp> = ({ type, setType }) => {
     setIsloading(true);
     reset();
     try {
-      const response = await fetch("/api/Order/", {
+      const response = await fetch("/api/order/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
