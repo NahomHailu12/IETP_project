@@ -1,6 +1,7 @@
 import prisma from "@/libs/prisma";
 import { Prisma } from "@/prisma/generated/prisma/client";
 import { hashPassword } from "@/utils/dummy/bcrypt";
+export const runtime = "nodejs";
 
 export async function POST(req: Request) {
   const data = await req.json();
@@ -31,7 +32,7 @@ export async function POST(req: Request) {
         if (error.code === "P2002") {
           return new Response(
             JSON.stringify({ error: "Username or Email already exists" }),
-            { status: 400 }
+            { status: 400 },
           );
         }
         console.error("Error creating user:", error);
@@ -55,7 +56,7 @@ export async function GET() {
   } catch (error) {
     return new Response(
       JSON.stringify({ message: error || "Internal Server Error" }),
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

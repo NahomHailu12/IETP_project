@@ -1,4 +1,5 @@
 import prisma from "@/libs/prisma";
+export const runtime = "nodejs";
 
 export async function POST(req: Request) {
   try {
@@ -21,7 +22,7 @@ export async function POST(req: Request) {
       });
       return new Response(
         JSON.stringify({ message: "Order created successfully" }),
-        { status: 201 }
+        { status: 201 },
       );
     } else {
       return new Response(JSON.stringify({ message: "Invalid input data" }), {
@@ -31,7 +32,7 @@ export async function POST(req: Request) {
   } catch (error) {
     return new Response(
       JSON.stringify({ message: error || "Internal Server Error" }),
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -43,7 +44,7 @@ export async function GET() {
   } catch (error) {
     return new Response(
       JSON.stringify({ message: error || "Internal Server Error" }),
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
