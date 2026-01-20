@@ -27,17 +27,6 @@ const Header: React.FC<HeaderProps> = ({ index }: HeaderProps) => {
           <li
             className={`cursor-pointer hover:text-amber-500 underline-offset-2 
                     ${
-                      index === 1
-                        ? "text-amber-500 border-b-3 border-b-amber-500"
-                        : "text-red border-b-3 border-b-transparent"
-                    }
-                    `}
-          >
-            Products
-          </li>
-          <li
-            className={`cursor-pointer hover:text-amber-500 underline-offset-2 
-                    ${
                       index == 2
                         ? "text-amber-500 border-b-3 border-b-amber-500"
                         : "text-red border-b-3 border-b-transparent"

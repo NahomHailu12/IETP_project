@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 const ImageCard = () => {
   return (
     <section
-      className="relative h-screen w-full bg-cover bg-center"
+      className="relative h-fit w-full bg-cover bg-center p-4"
       style={{ backgroundImage: "url('/homepagebg.jpg')" }}
     >
       <div className="absolute inset-0 bg-black/50" />
@@ -21,7 +21,7 @@ const ImageCard = () => {
             transition={{ duration: 1.2, ease: "easeOut" }}
             className="max-w-5xl text-white text-5xl md:text-7xl font-extrabold leading-tight mb-8"
           >
-            HEAVY MACHINERY SOLUTIONS FOR YOUR INDUSTRIAL NEEDS
+            LOCAL MACHINERY SOLUTIONS FOR YOUR AGRICULTURE NEEDS
           </motion.h1>
 
           <motion.p
@@ -30,9 +30,8 @@ const ImageCard = () => {
             transition={{ delay: 0.3, duration: 1 }}
             className="max-w-3xl text-gray-200 text-lg md:text-xl leading-loose mb-10"
           >
-            Providing durable equipment for construction, mining, and
-            agriculture. Powered by cutting-edge technology to perform in the
-            toughest environments.
+            Providing durable equipment for local agriculture. Powered by
+            cutting-edge technology to perform in the toughest environments.
           </motion.p>
 
           <motion.button

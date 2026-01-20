@@ -6,11 +6,20 @@ import { toast } from "sonner";
 interface ContactFormData {
   fullname: string;
   email: string;
-  phone: string;
+  amount: number;
   message: string;
 }
 
-const ContactForm = () => {
+interface OrderProcessProp {
+  type: "0" | "1" | "2" | "3";
+  setType: React.Dispatch<React.SetStateAction<"0" | "1" | "2" | "3">>;
+}
+const prices: Record<string, number> = {
+  "1": 120000,
+  "2": 500000,
+  "3": 670000,
+};
+const OrderProcess: React.FC<OrderProcessProp> = ({ type, setType }) => {
   const {
     register,
     handleSubmit,
@@ -22,39 +31,37 @@ const ContactForm = () => {
   const [isloading, setIsloading] = useState(false);
   const handleContact = async (data: ContactFormData) => {
     // implentation for handling contact form submission
-    const formData = new FormData();
     setIsloading(true);
-    formData.append("entry.837781771", data.fullname);
-    formData.append("entry.1301334933", data.email);
-    formData.append("entry.1382919883", data.phone);
-    formData.append("entry.1517393507", data.message);
-    const url =
-      "https://docs.google.com/forms/d/e/1FAIpQLSdVYZj_lpa2qvnYMLoqJ91Hp01UUiObs9UOUVBrlOlKsLH4uQ/formResponse";
-    try {
-      await fetch(url, {
-        method: "POST",
-        body: formData,
-        mode: "no-cors",
-      });
-    } catch (err: unknown) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : "Unable to send your message. Please try again later.";
-      toast.error(message);
-      setIsloading(false);
-      return;
-    }
-    toast.success("submitted successfully");
-    setIsloading(false);
     reset();
+    try {
+      const response = await fetch("/api/Order/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...data,
+          amount: Number(data.amount),
+          price: prices[type] * Number(data.amount),
+        }),
+      });
+      if (response.ok) {
+        toast.success("Order placed successfully!");
+      }
+    } catch (err) {
+      console.error("Error submitting order:", err);
+      toast.error("we can't process your request try again later");
+    }
+
+    setType("0");
+    setIsloading(false);
   };
   return (
-    <div className="w-5/6 mx-8 my-16 h-min-30rem border border-gray-100 p-6 bg-gray-50 rounded-lg text-black shadow-sm">
+    <div className="w-5/6 mx-8 my-16 min-h-screen border border-gray-100 p-6 bg-gray-50 rounded-lg text-black shadow-sm">
       <h1 className="block font-bold text-3xl text-amber-300 text-center my-6">
         <Contact className="inline mx-3 text-amber-500 mb-1 mr-2" size={60} />{" "}
         {"  "}
-        SHARE US YOUR THOUGHTS
+        Order Process
       </h1>
       <form
         className="grid grid-cols-2 p-4 gap-6"
@@ -107,22 +114,19 @@ const ContactForm = () => {
               className="inline mx-3 text-amber-500 mb-1 mr-2"
               size={40}
             />{" "}
-            Phone Number
+            Amount
           </label>
           <input
-            type="text"
-            {...register("phone", {
-              pattern: {
-                value: /^\+?[0-9\s\-()]{7,15}$/,
-                message: "Invalid phone number format",
-              },
+            type="number"
+            {...register("amount", {
+              min: { value: 1, message: "Amount must be at least 1" },
             })}
             className="mx-8 p-2 border border-gray-200 rounded-md w-5/6 block focus:border-amber-400 focus:outline-none  h-12 my-4"
-            name="phone"
-            placeholder="Ex. +251-945-67-890"
+            name="amount"
+            placeholder="Ex. 10"
             required
           />
-          {errors.phone && (
+          {errors.amount && (
             <p className="text-left text-sm text-red-500">
               Invalid phone number format
             </p>
@@ -134,7 +138,7 @@ const ContactForm = () => {
               className="inline mx-3 text-amber-500 mb-1 mr-2"
               size={40}
             />{" "}
-            Leave Us Message
+            Special Instructions
           </label>
 
           <textarea
@@ -152,21 +156,26 @@ const ContactForm = () => {
         <input
           className={`py-2.5 w-60 rounded-2xl w-max-60 h-10 text-white 
           
-            ${isloading ? "bg-amber-200" : "bg-amber-500"} hover:bg-amber-200`}
+            ${
+              isloading ? "bg-amber-200" : "bg-amber-500"
+            } hover:bg-amber-200 pointer-cursor `}
           type="submit"
-          // disabled={
-          //   errors.fullname || errors.email || errors.phone || errors.message || isloading
-          //     ? true
-          //     : false
-          // }
-          value={isloading ? "Loading..." : "Get in Touch"}
+          value={isloading ? "Loading..." : "Order"}
         />
+        <button
+          className=" pointer-cursor py-2.5 w-60 rounded-2xl w-max-60 h-10 text-white bg-red-500 hover:bg-gray-700"
+          onClick={() => {
+            setType("0");
+          }}
+        >
+          Cancel
+        </button>
       </form>
     </div>
   );
 };
 
-export default ContactForm;
+export default OrderProcess;
 {
   /* <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdVYZj_lpa2qvnYMLoqJ91Hp01UUiObs9UOUVBrlOlKsLH4uQ/formResponse?embedded=true" width="640" height="780" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe> */
 }

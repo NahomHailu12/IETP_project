@@ -2,7 +2,7 @@
 import ContactCard from "@/components/common/ContactCard";
 import ButtonWidget from "@/components/UI/Home UI/Button";
 import ImageCard from "@/components/UI/Home UI/ImageCard";
-import HomeProduct from "@/components/UI/Home UI/product";
+import ProductParent from "@/components/UI/Home UI/productParent";
 import Testimony from "@/components/UI/Home UI/testimony";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -15,13 +15,13 @@ export default function Page() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col gap-0 items-center justify-center bg-zinc-50">
+    <div className="flex min-h-screen flex-col gap-3 items-center justify-center bg-zinc-50">
       <ImageCard />
 
-      <div className="w-full">
+      <div className="w-full flex flex-col">
         <motion.p
           {...fadeUp}
-          className="p-4 lg:mx-20 text-5xl font-bold text-black text-center mb-16 leading-[5.8rem]"
+          className="p-4 mt-30 md:mt-0 lg:mx-20 text-5xl font-bold text-black text-center mb-16 leading-[5.8rem]"
         >
           Our Machinery and Services
         </motion.p>
@@ -44,26 +44,9 @@ export default function Page() {
 
         <motion.div
           {...fadeUp}
-          className="grid px-8 mx-8 grid-cols-1 gap-6 md:grid-cols-3"
+          className="w-full"
         >
-          <HomeProduct
-            imageUrl="url('/product1.jpg')"
-            title="Excavator ZX350LC-6"
-            power="257 HP"
-            price="$120,000"
-          />
-          <HomeProduct
-            imageUrl="url('/product1.jpg')"
-            title="Tractor ZX350LC-6"
-            power="679 HP"
-            price="$500,000"
-          />
-          <HomeProduct
-            imageUrl="url('/product1.jpg')"
-            title="EXcavator ZX350LC-6"
-            power="1200 HP"
-            price="$670,000"
-          />
+          <ProductParent />
         </motion.div>
 
         <motion.p
@@ -81,7 +64,7 @@ export default function Page() {
 
         <motion.div
           {...fadeUp}
-          className="grid px-20 grid-cols-1 gap-12 md:grid-cols-3 mb-20 text-amber-300"
+          className="grid px-4 md:px-20 grid-cols-1 gap-12 md:grid-cols-3 mb-20 text-amber-300"
         >
           <Testimony
             imageUrl="/user1.jpg"

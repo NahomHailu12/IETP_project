@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated/prisma"
+  moduleFormat            = "esm"
+  generatedFileExtension  = "ts"
+  importFileExtension     = "ts"
+}
+datasource db {
+  provider  = "postgresql"
+}
+
+// User and Order models with enums for role and status
+
+model User{
+  id String @id @default(cuid())
+  username String @unique
+  email String @unique
+  phone String @unique
+  password String
+  role ROLE
+  datejoined DateTime @default(now())
+}
+
+enum ROLE {
+  client
+  admin
+  superAdmin
+}
+
+model Order{
+  id String @id @default(cuid())
+  name String
+  email String
+  status STATUS @default(pending)
+  date DateTime @default(now())
+  amount Int
+  price Float 
+  message String
+}
+ 
+enum STATUS {
+  pending
+  Completed
+  Cancelled
+}

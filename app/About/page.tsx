@@ -31,7 +31,29 @@ const About = () => {
         <Ear className="inline text-center mx-2 " size={60} />
         <h1 className="inline text-5xl text-center">Hear From Our Customers</h1>
       </div>
-
+      <div className="flex justify-center p-6 gap-6 items-center">
+        <div className="border border-gray-100 py-12 w-2/3 px-6 rounded-3xl bg-gray-900 mx-6">
+          <h2 className="block my-3 leading-8 text-left text-amber-500 text-5xl">
+            Our Vision and Mission
+          </h2>
+          <h2 className="block my-3 leading-8 text-left text-amber-500 text-2xl">
+            Mission
+          </h2>
+          <p className="block my-3 leading-8 text-left text-gray-300 text-lg">
+            Our mission is empowering local agricultural communities through
+            innovative equipment and sustainable practices. We are committed to
+            fostering growth and sustainability in agriculture.
+          </p>
+          <h2 className="block my-3 leading-8 text-left text-amber-500 text-2xl">
+            Vision
+          </h2>
+          <p className="block my-3 leading-8 text-left text-gray-300 text-lg">
+            Our vision is to become a global leader in agricultural innovation,
+            driving progress and sustainability worldwide and become center of
+            local innovation to create solution for Africa.
+          </p>
+        </div>
+      </div>
       <div className="grid px-20 grid-cols-1 gap-12 md:grid-cols-3 mb-20 text-amber-300">
         <Testimony
           imageUrl="/user1.jpg"
@@ -76,54 +98,7 @@ const About = () => {
           testimony="Their modern and multi-purpose equipment has made our tasks much easier. The team is always ready to assist us whenever needed."
         />
       </div>
-      <div className="grid grid-cols-1 p-6 my-12 md:grid-cols-2 gap-6 items-center">
-        <div className="flex flex-col items-center border border-gray-100 py-4 px-6 rounded-3xl mx-6">
-          <div className="flex">
-            <Image
-              src="/product1.jpg"
-              alt="About Us Image"
-              className="my-8 mx-6 rounded-2xl p-6 border border-gray-200"
-              width={400}
-              height={200}
-            />
-            <Image
-              src="/product1.jpg"
-              alt="About Us Image"
-              className="my-8 mx-6 rounded-2xl p-6 border border-gray-200"
-              width={400}
-              height={200}
-            />
-          </div>
-          <Image
-            src="/product1.jpg"
-            width={400}
-            height={200}
-            alt="About Us Image"
-            className="my-8 mx-6 rounded-2xl p-6 border border-gray-200"
-          />
-        </div>
-        <div className="border border-gray-100 py-12 px-6 rounded-3xl bg-gray-900 mx-6">
-          <h2 className="block my-3 leading-8 text-left text-amber-500 text-5xl">
-            Our Vision and Mission
-          </h2>
-          <h2 className="block my-3 leading-8 text-left text-amber-500 text-2xl">
-            Mission
-          </h2>
-          <p className="block my-3 leading-8 text-left text-gray-300 text-lg">
-            Our mission is empowering local agricultural communities through
-            innovative equipment and sustainable practices. We are committed to
-            fostering growth and sustainability in agriculture.
-          </p>
-          <h2 className="block my-3 leading-8 text-left text-amber-500 text-2xl">
-            Vision
-          </h2>
-          <p className="block my-3 leading-8 text-left text-gray-300 text-lg">
-            Our vision is to become a global leader in agricultural innovation,
-            driving progress and sustainability worldwide and become center of
-            local innovation to create solution for Africa.
-          </p>
-        </div>
-      </div>
+
       <ContactCard />
     </div>
   );
